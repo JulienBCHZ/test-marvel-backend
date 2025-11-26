@@ -8,6 +8,7 @@ const comicRouter = require("./routes/comic");
 const charactersRouter = require("./routes/characters");
 const characterRouter = require("./routes/character");
 const userRouter = require("./routes/user");
+const favoritsRouter = require("./routes/favorits");
 
 const app = express();
 app.use(express.json());
@@ -26,6 +27,7 @@ app.use(comicRouter);
 app.use(charactersRouter);
 app.use(characterRouter);
 app.use(userRouter);
+app.use(favoritsRouter);
 
 // NO ROUTES
 app.all(/.*/, (req, res) => {

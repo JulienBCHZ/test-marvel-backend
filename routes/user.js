@@ -9,25 +9,26 @@ const encBase64 = require("crypto-js/enc-base64");
 const User = require("../Models/User");
 
 router.post("/user/signup", async (req, res) => {
+  const { email, username, password, newsletter } = req.body;
   try {
     // Check des infos
-    if (!req.body.email) {
+    if (!email) {
       return res.status(403).json({ message: "Email needed" });
-    } else if (!req.body.username) {
+    } else if (!username) {
       return res.status(403).json({ message: "Username needed" });
-    } else if (!req.body.password) {
+    } else if (!password) {
       return res.status(403).json({ message: "Choose a password" });
     }
 
     // Recherche USER
-    const userToCheck = await User.findOne({ email: req.body.email });
+    const userToCheck = await User.findOne({ email: email });
     if (userToCheck) {
       return res.json({
         message: "Unauthorized",
       });
     }
     const usernameToCheck = await User.findOne({
-      account: { username: req.body.username },
+      account: { username: username },
     });
     if (usernameToCheck) {
       return res.json({ message: "Username unavailable" });
@@ -36,7 +37,7 @@ router.post("/user/signup", async (req, res) => {
     // Password encryption
     const salt = uid2(16);
 
-    const passwordSalt = req.body.password + salt;
+    const passwordSalt = password + salt;
 
     const hash = SHA256(passwordSalt).toString(encBase64);
 
@@ -44,9 +45,9 @@ router.post("/user/signup", async (req, res) => {
 
     // créa USER
     const newUser = new User({
-      email: req.body.email,
-      account: { username: req.body.username },
-      newsletter: req.body.newsletter,
+      email: email,
+      account: { username: username },
+      newsletter: newsletter,
       token: token,
       hash: hash,
       salt: salt,
@@ -58,6 +59,32 @@ router.post("/user/signup", async (req, res) => {
       token: newUser.token,
       account: { username: newUser.account.username },
     });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.post("/user/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const userLogin = await User.findOne({ email: email });
+    if (!userLogin) {
+      return res.json({ message: "Unauthorized" });
+    }
+
+    const passwordSaltLogin = password + userLogin.salt;
+    const hashLogin = SHA256(passwordSaltLogin).toString(encBase64);
+
+    if (hashLogin === userLogin.hash) {
+      res.json({
+        _id: userLogin._id,
+        token: userLogin.token,
+        account: { username: userLogin.account.username },
+      });
+    } else {
+      return res.json({ message: "Unauthorized" });
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
