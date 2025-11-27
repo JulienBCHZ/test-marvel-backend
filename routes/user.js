@@ -8,7 +8,7 @@ const encBase64 = require("crypto-js/enc-base64");
 
 const User = require("../Models/User");
 
-router.post("/user/signup", async (req, res) => {
+router.post("/auth/signup", async (req, res) => {
   const { email, username, password, newsletter } = req.body;
   try {
     // Check des infos
@@ -64,7 +64,7 @@ router.post("/user/signup", async (req, res) => {
   }
 });
 
-router.post("/user/login", async (req, res) => {
+router.post("/auth/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {

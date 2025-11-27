@@ -5,9 +5,14 @@ const axios = require("axios");
 // READ ALL CHARACTERS
 
 router.get("/characters", async (req, res) => {
+  const { name, skip, limit } = req.query;
+  let getName = name || "";
+  let getSkip = skip || 0;
+  let getLimit = limit || 100;
+
   try {
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=${process.env.API_KEY}`
+      `https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=${process.env.API_KEY}&limit=${getLimit}&skip=${getSkip}&name=${getName}`
     );
     // console.log(response.data);
     res.status(201).json({ data: response.data });

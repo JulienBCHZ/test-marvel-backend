@@ -1,6 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 const mongoose = require("mongoose");
+const cloudinary = require("cloudinary").v2;
 const cors = require("cors");
 
 const comicsRouter = require("./routes/comics");
@@ -15,6 +16,12 @@ app.use(express.json());
 app.use(cors());
 
 mongoose.connect(process.env.MONGODB_URI);
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 app.get("/", (req, res) => {
   res.json({ message: "We are in !" });
