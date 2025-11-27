@@ -2,14 +2,12 @@ const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 
-const apiKey = "9xe2YtURnodSMq9J";
-
 router.get("/comic/:comicId", async (req, res) => {
   const id = req.params.comicId;
 
   try {
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/comic/${id}?apiKey=${apiKey}`
+      `https://lereacteur-marvel-api.herokuapp.com/comic/${id}?apiKey=${process.env.API_KEY}`
       //`https://lereacteur-marvel-api.herokuapp.com/character/${id}?apiKey=${apiKey}`
     );
     console.log("COMIC :", response.data);

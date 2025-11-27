@@ -4,14 +4,12 @@ const axios = require("axios");
 
 // READ
 
-const apiKey = "9xe2YtURnodSMq9J";
-
 router.get("/comics", async (req, res) => {
   const { title, page } = req.query;
 
   try {
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=${apiKey}`
+      `https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=${process.env.API_KEY}`
     );
 
     console.log("DATA :", response.data);

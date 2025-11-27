@@ -31,7 +31,7 @@ app.use(favoritsRouter);
 
 // NO ROUTES
 app.all(/.*/, (req, res) => {
-  res.json({ message: "Route does not exist" });
+  res.status(404).json({ message: "Route does not exist" });
 });
 
 // SERVER
