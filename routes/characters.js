@@ -5,10 +5,16 @@ const axios = require("axios");
 // READ ALL CHARACTERS
 
 router.get("/characters", async (req, res) => {
-  const { name, skip, limit } = req.query;
+  const { name, skip, limit, page } = req.query;
+
   let getName = name || "";
   let getSkip = skip || 0;
   let getLimit = limit || 100;
+
+  if (page) {
+    getLimit = 10;
+    getSkip = getLimit * page - 10;
+  }
 
   try {
     const response = await axios.get(
