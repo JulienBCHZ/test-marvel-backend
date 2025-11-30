@@ -8,6 +8,8 @@ const encBase64 = require("crypto-js/enc-base64");
 
 const User = require("../Models/User");
 
+// SIGNUP
+
 router.post("/auth/signup", async (req, res) => {
   const { email, username, password, newsletter } = req.body;
   try {
@@ -63,6 +65,8 @@ router.post("/auth/signup", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+// LOGIN
 
 router.post("/auth/login", async (req, res) => {
   const { email, password } = req.body;

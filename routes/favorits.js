@@ -13,7 +13,7 @@ router.post(
   isAuthenticated,
   fileUpload(),
   async (req, res) => {
-    const { title, description } = req.body;
+    const { title, description, image } = req.body;
 
     try {
       const favoritToCheck = await Favorit.findOne({ item_title: title });
@@ -23,24 +23,24 @@ router.post(
         });
       }
       // UPLOAD des images dans des assets avec le nom du User et de l'item en favorit
-      let allCloudinaryResponses = [];
-      if (req.files) {
-        for (i = 0; i < req.files.image.length; i++) {
-          const fileToString = convertToBase64(req.files.image[i]);
-          const cloudinaryResponse = await cloudinary.uploader.upload(
-            fileToString,
-            { asset_folder: `/${req.user.account.username}/${title}` }
-          );
-          allCloudinaryResponses.push(cloudinaryResponse);
-        }
-      }
+      //   let allCloudinaryResponses = [];
+      //   if (req.files) {
+      //     for (i = 0; i < req.files.image.length; i++) {
+      //       const fileToString = convertToBase64(req.files.image[i]);
+      //       const cloudinaryResponse = await cloudinary.uploader.upload(
+      //         fileToString,
+      //         { asset_folder: `/${req.user.account.username}/${title}` }
+      //       );
+      //       allCloudinaryResponses.push(cloudinaryResponse);
+      //     }
+      //   }
 
       //  MODEL :     item_title: String,
       //   item_description: String,
       const newFavorit = new Favorit({
         item_title: title,
         item_description: description,
-        item_image: allCloudinaryResponses,
+        item_image: image,
         owner: req.user._id,
       });
 
