@@ -22,21 +22,7 @@ router.post(
           message: "Already added in favorits",
         });
       }
-      // UPLOAD des images dans des assets avec le nom du User et de l'item en favorit
-      //   let allCloudinaryResponses = [];
-      //   if (req.files) {
-      //     for (i = 0; i < req.files.image.length; i++) {
-      //       const fileToString = convertToBase64(req.files.image[i]);
-      //       const cloudinaryResponse = await cloudinary.uploader.upload(
-      //         fileToString,
-      //         { asset_folder: `/${req.user.account.username}/${title}` }
-      //       );
-      //       allCloudinaryResponses.push(cloudinaryResponse);
-      //     }
-      //   }
 
-      //  MODEL :     item_title: String,
-      //   item_description: String,
       const newFavorit = new Favorit({
         item_title: title,
         item_description: description,
@@ -59,7 +45,10 @@ router.post(
 // READ FAVORITS
 router.get("/user/favorits", isAuthenticated, async (req, res) => {
   try {
-    const favorits = await Favorit.find().populate("owner", "account");
+    const favorits = await Favorit.find({ owner: req.user._id }).populate(
+      "owner",
+      "account"
+    );
 
     const count = await Favorit.countDocuments();
     // res.json({ message: "Wait..." });
@@ -85,7 +74,7 @@ router.get("/user/favorit/:id", isAuthenticated, async (req, res) => {
 });
 
 // READ BY ID AND DELETE
-router.get("/user/favorit/delete/:id", isAuthenticated, async (req, res) => {
+router.delete("/user/favorit/delete/:id", isAuthenticated, async (req, res) => {
   try {
     console.log("ID :", req.params);
 
