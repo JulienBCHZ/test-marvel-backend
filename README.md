@@ -115,7 +115,15 @@ CLOUDINARY_API_KEY=your_cloudinary_api_key
 CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 ```
 
+---
+
 ## ▶️ Lancer le projet en local
+
+### Prérequis
+
+- [Node.js](https://nodejs.org/en) installé sur la machine
+
+### Étapes
 
 1. Cloner le dépôt :
 
@@ -138,11 +146,16 @@ npx nodemon index.js
 Le serveur démarre par défaut sur :
 👉 http://localhost:3000
 
+---
+
 ## 📄 License
 
 Ce projet est fourni à des fins éducatives. Il n’est pas destiné à un usage commercial.
 
+---
+
 ## 📡 Contact
 
-Julien Bouchez : julienbouchez@icloud.com
-Profile GitHub : [@JulienBCHZ](https://github.com/JulienBCHZ)
+- Julien Bouchez : julienbouchez@icloud.com
+- Profile GitHub : [@JulienBCHZ](https://github.com/JulienBCHZ)
+- Profile LinkedIn : [@JulienBouchez](https://www.linkedin.com/in/julien-bouchez-developer/)
