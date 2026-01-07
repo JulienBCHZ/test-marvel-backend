@@ -2,7 +2,11 @@ const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 
-router.get("/comic/:comicId", async (req, res) => {
+////////////////////////////////////////////////
+///////////////// API V1 //////////////////////
+//////////////////////////////////////////////
+
+router.get("api/v1/comic/:comicId", async (req, res) => {
   const id = req.params.comicId;
 
   try {

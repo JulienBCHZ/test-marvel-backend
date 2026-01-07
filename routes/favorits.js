@@ -7,43 +7,42 @@ const Favorit = require("../Models/Favorit");
 const convertToBase64 = require("../utils/convertToBase64");
 const isAuthenticated = require("../middleware/isAuthenticated");
 
+////////////////////////////////////////////////
+///////////////// API V1 //////////////////////
+//////////////////////////////////////////////
+
 // CREATE FAVORIT
-router.post(
-  "/user/favorits/add",
-  isAuthenticated,
-  fileUpload(),
-  async (req, res) => {
-    const { title, description, image } = req.body;
 
-    try {
-      const favoritToCheck = await Favorit.findOne({ item_title: title });
-      if (favoritToCheck) {
-        return res.json({
-          message: "Already added in favorits",
-        });
-      }
+router.post("api/v1/user/favorits/add", isAuthenticated, async (req, res) => {
+  const { title, description, image } = req.body;
 
-      const newFavorit = new Favorit({
-        item_title: title,
-        item_description: description,
-        item_image: image,
-        owner: req.user._id,
+  try {
+    const favoritToCheck = await Favorit.findOne({ item_title: title });
+    if (favoritToCheck) {
+      return res.json({
+        message: "Already added in favorits",
       });
-
-      await newFavorit.save();
-      const newFavoriteSave = await newFavorit.populate("owner", "account");
-
-      res
-        .status(201)
-        .json({ message: "Add in favorits", data: newFavoriteSave });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
     }
+
+    const newFavorit = new Favorit({
+      item_title: title,
+      item_description: description || "",
+      item_image: image || "",
+      owner: req.user._id,
+    });
+
+    await newFavorit.save();
+    const newFavoriteSave = await newFavorit.populate("owner", "account");
+
+    res.status(201).json({ message: "Add in favorits", data: newFavoriteSave });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
-);
+});
 
 // READ FAVORITS
-router.get("/user/favorits", isAuthenticated, async (req, res) => {
+
+router.get("api/v1/user/favorits", isAuthenticated, async (req, res) => {
   try {
     const favorits = await Favorit.find({ owner: req.user._id }).populate(
       "owner",
@@ -59,7 +58,8 @@ router.get("/user/favorits", isAuthenticated, async (req, res) => {
 });
 
 // READ BY ID
-router.get("/user/favorit/:id", isAuthenticated, async (req, res) => {
+
+router.get("api/v1/user/favorit/:id", isAuthenticated, async (req, res) => {
   try {
     console.log("ID :", req.params);
 
@@ -74,18 +74,23 @@ router.get("/user/favorit/:id", isAuthenticated, async (req, res) => {
 });
 
 // READ BY ID AND DELETE
-router.delete("/user/favorit/delete/:id", isAuthenticated, async (req, res) => {
-  try {
-    console.log("ID :", req.params);
 
-    const id = req.params.id;
+router.delete(
+  "api/v1/user/favorit/delete/:id",
+  isAuthenticated,
+  async (req, res) => {
+    try {
+      console.log("ID :", req.params);
 
-    const favoritDeleted = await Favorit.findByIdAndDelete(id);
+      const id = req.params.id;
 
-    res.status(201).json({ message: "Favorit deleted" });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+      const favoritDeleted = await Favorit.findByIdAndDelete(id);
+
+      res.status(201).json({ message: "Favorit deleted" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
   }
-});
+);
 
 module.exports = router;

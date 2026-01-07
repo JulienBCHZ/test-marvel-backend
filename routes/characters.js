@@ -2,9 +2,13 @@ const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 
+////////////////////////////////////////////////
+///////////////// API V1 //////////////////////
+//////////////////////////////////////////////
+
 // READ ALL CHARACTERS
 
-router.get("/characters", async (req, res) => {
+router.get("api/v1/characters", async (req, res) => {
   const { name, skip, limit, page } = req.query;
 
   let getName = name || "";

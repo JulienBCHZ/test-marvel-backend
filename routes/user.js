@@ -8,24 +8,30 @@ const encBase64 = require("crypto-js/enc-base64");
 
 const User = require("../Models/User");
 
+////////////////////////////////////////////////
+///////////////// API V1 //////////////////////
+//////////////////////////////////////////////
+
+/////////// AUTHENTIFICATION ///////////
+
 // SIGNUP
 
-router.post("/auth/signup", async (req, res) => {
+router.post("api/v1/auth/signup", async (req, res) => {
   const { email, username, password, newsletter } = req.body;
-  try {
-    // Check des infos
-    if (!email) {
-      return res.status(403).json({ message: "Email needed" });
-    } else if (!username) {
-      return res.status(403).json({ message: "Username needed" });
-    } else if (!password) {
-      return res.status(403).json({ message: "Choose a password" });
-    }
+  // Check des infos
+  if (!email) {
+    return res.status(403).json({ message: "An email is required" });
+  } else if (!username) {
+    return res.status(403).json({ message: "A username is required" });
+  } else if (!password) {
+    return res.status(403).json({ message: "Choose a password" });
+  }
 
+  try {
     // Recherche USER
     const userToCheck = await User.findOne({ email: email });
     if (userToCheck) {
-      return res.json({
+      return res.status(401).json({
         message: "Unauthorized",
       });
     }
@@ -33,7 +39,7 @@ router.post("/auth/signup", async (req, res) => {
       account: { username: username },
     });
     if (usernameToCheck) {
-      return res.json({ message: "Username unavailable" });
+      return res.status(409).json({ message: "Username unavailable" });
     }
 
     // Password encryption
@@ -62,19 +68,27 @@ router.post("/auth/signup", async (req, res) => {
       account: { username: newUser.account.username },
     });
   } catch (error) {
+    console.log("SIGNUP ERR : ", error);
     res.status(500).json({ message: error.message });
   }
 });
 
 // LOGIN
 
-router.post("/auth/login", async (req, res) => {
+router.post("api/v1/auth/login", async (req, res) => {
   const { email, password } = req.body;
+  if (!email) {
+    return res.status(403).json({ message: "Your email is required" });
+  } else if (!password) {
+    return res.status(403).json({ message: "Your password is required" });
+  }
 
   try {
     const userLogin = await User.findOne({ email: email });
     if (!userLogin) {
-      return res.json({ message: "Unauthorized" });
+      return res
+        .status(401)
+        .json({ message: "Check your email and/or password" });
     }
 
     const passwordSaltLogin = password + userLogin.salt;
@@ -87,7 +101,9 @@ router.post("/auth/login", async (req, res) => {
         account: { username: userLogin.account.username },
       });
     } else {
-      return res.json({ message: "Unauthorized" });
+      return res
+        .status(401)
+        .json({ message: "Check your email and/or password" });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
