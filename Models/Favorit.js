@@ -4,6 +4,7 @@ const Favorit = mongoose.model("Favorit", {
   item_title: String,
   item_description: String,
   item_image: String,
+  createdAt: Date,
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

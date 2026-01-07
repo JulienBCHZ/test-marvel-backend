@@ -28,6 +28,7 @@ router.post("/api/v1/user/favorits/add", isAuthenticated, async (req, res) => {
       item_title: title,
       item_description: description || "",
       item_image: image || "",
+      createdAt: new Date(),
       owner: req.user._id,
     });
 
