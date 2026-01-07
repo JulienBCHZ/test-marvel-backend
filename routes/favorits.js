@@ -13,7 +13,7 @@ const isAuthenticated = require("../middleware/isAuthenticated");
 
 // CREATE FAVORIT
 
-router.post("api/v1/user/favorits/add", isAuthenticated, async (req, res) => {
+router.post("/api/v1/user/favorits/add", isAuthenticated, async (req, res) => {
   const { title, description, image } = req.body;
 
   try {
@@ -42,7 +42,7 @@ router.post("api/v1/user/favorits/add", isAuthenticated, async (req, res) => {
 
 // READ FAVORITS
 
-router.get("api/v1/user/favorits", isAuthenticated, async (req, res) => {
+router.get("/api/v1/user/favorits", isAuthenticated, async (req, res) => {
   try {
     const favorits = await Favorit.find({ owner: req.user._id }).populate(
       "owner",
@@ -59,7 +59,7 @@ router.get("api/v1/user/favorits", isAuthenticated, async (req, res) => {
 
 // READ BY ID
 
-router.get("api/v1/user/favorit/:id", isAuthenticated, async (req, res) => {
+router.get("/api/v1/user/favorit/:id", isAuthenticated, async (req, res) => {
   try {
     console.log("ID :", req.params);
 
@@ -76,7 +76,7 @@ router.get("api/v1/user/favorit/:id", isAuthenticated, async (req, res) => {
 // READ BY ID AND DELETE
 
 router.delete(
-  "api/v1/user/favorit/delete/:id",
+  "/api/v1/user/favorit/delete/:id",
   isAuthenticated,
   async (req, res) => {
     try {

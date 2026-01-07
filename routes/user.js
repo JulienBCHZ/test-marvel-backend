@@ -16,7 +16,7 @@ const User = require("../Models/User");
 
 // SIGNUP
 
-router.post("api/v1/auth/signup", async (req, res) => {
+router.post("/api/v1/auth/signup", async (req, res) => {
   const { email, username, password, newsletter } = req.body;
   // Check des infos
   if (!email) {
@@ -75,7 +75,7 @@ router.post("api/v1/auth/signup", async (req, res) => {
 
 // LOGIN
 
-router.post("api/v1/auth/login", async (req, res) => {
+router.post("/api/v1/auth/login", async (req, res) => {
   const { email, password } = req.body;
   if (!email) {
     return res.status(403).json({ message: "Your email is required" });

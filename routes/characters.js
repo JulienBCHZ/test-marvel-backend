@@ -8,7 +8,7 @@ const axios = require("axios");
 
 // READ ALL CHARACTERS
 
-router.get("api/v1/characters", async (req, res) => {
+router.get("/api/v1/characters", async (req, res) => {
   const { name, skip, limit, page } = req.query;
 
   let getName = name || "";

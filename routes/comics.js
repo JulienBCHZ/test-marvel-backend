@@ -8,7 +8,7 @@ const axios = require("axios");
 
 // READ
 
-router.get("api/v1/comics", async (req, res) => {
+router.get("/api/v1/comics", async (req, res) => {
   const { title, skip, limit, page } = req.query;
   console.log(page);
 
@@ -35,7 +35,7 @@ router.get("api/v1/comics", async (req, res) => {
 
 // READ WITH CHARACTER ID
 
-router.get("api/v1/comics/:characterId", async (req, res) => {
+router.get("/api/v1/comics/:characterId", async (req, res) => {
   const id = req.params.characterId;
   try {
     const response = await axios.get(

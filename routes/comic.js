@@ -6,7 +6,7 @@ const axios = require("axios");
 ///////////////// API V1 //////////////////////
 //////////////////////////////////////////////
 
-router.get("api/v1/comic/:comicId", async (req, res) => {
+router.get("/api/v1/comic/:comicId", async (req, res) => {
   const id = req.params.comicId;
 
   try {

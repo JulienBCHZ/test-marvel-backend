@@ -6,7 +6,7 @@ const axios = require("axios");
 ///////////////// API V1 //////////////////////
 //////////////////////////////////////////////
 
-router.get("api/v1/character/:characterId", async (req, res) => {
+router.get("/api/v1/character/:characterId", async (req, res) => {
   const id = req.params.characterId;
 
   try {
