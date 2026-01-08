@@ -6,11 +6,13 @@ const axios = require("axios");
 ///////////////// API V1 //////////////////////
 //////////////////////////////////////////////
 
-// READ
+///////////// API REQUEST /////////////
+
+//** READ **//
 
 router.get("/api/v1/comics", async (req, res) => {
   const { title, skip, limit, page } = req.query;
-  console.log(page);
+  // console.log(page);
 
   let getTitle = title || "";
   let getSkip = skip || 0;
@@ -33,7 +35,7 @@ router.get("/api/v1/comics", async (req, res) => {
   }
 });
 
-// READ WITH CHARACTER ID
+//** READ WITH CHARACTER ID **//
 
 router.get("/api/v1/comics/:characterId", async (req, res) => {
   const id = req.params.characterId;

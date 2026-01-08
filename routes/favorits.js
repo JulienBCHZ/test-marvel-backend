@@ -17,12 +17,12 @@ router.post("/api/v1/user/favorits/add", isAuthenticated, async (req, res) => {
   const { title, description, image } = req.body;
 
   try {
-    const favoritToCheck = await Favorit.findOne({ item_title: title });
-    if (favoritToCheck) {
-      return res.json({
-        message: "Already added in favorits",
-      });
-    }
+    // const favoritToCheck = await Favorit.findOne({ item_title: title });
+    // if (favoritToCheck) {
+    //   return res.json({
+    //     message: "Already added in favorits",
+    //   });
+    // }
 
     const newFavorit = new Favorit({
       item_title: title,
