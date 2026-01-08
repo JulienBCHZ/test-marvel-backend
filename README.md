@@ -18,7 +18,7 @@ Cette API est développée en **JavaScript**, exécutée avec **Node.js**, et se
 
 ---
 
-## ⚙️ Fonctionnalités principales
+## 🧰 Fonctionnalités principales
 
 - Authentification des utilisateurs
 - Récupération des personnages Marvel
