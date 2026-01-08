@@ -79,12 +79,12 @@ Deux collections principales sont utilisées :
 - avatar
 - password (hash)
 
-#### ⭐ Favorite
+#### ⭐ Favorit
 
 - item title
 - item description
 - item image (url)
-- userId (référence User)
+- user_Id (référence User)
 
 ---
 
