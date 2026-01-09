@@ -16,8 +16,8 @@ router.get("/api/v1/characters", async (req, res) => {
   let getLimit = limit || 100;
 
   if (page) {
-    getLimit = 20;
-    getSkip = getLimit * page - 20;
+    getLimit = 10;
+    getSkip = getLimit * page - 10;
   }
 
   try {
